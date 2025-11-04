@@ -1,0 +1,14 @@
+enabled: true
+checks:
+  lint: true
+  tests: false
+  semgrep: false
+  dependency_audit: false
+  license_check: false
+pr_size_limit: 500
+ignore_paths:
+  - "docs/**"
+  - "vendor/**"
+comment_preferences:
+  summary_only: false
+  max_inline_comments: 25
