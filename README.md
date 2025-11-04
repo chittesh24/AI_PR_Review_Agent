@@ -8,7 +8,7 @@ The agent runs inside Docker and connects to your local Ollama using `host.docke
 - Fetches PR diffs via GitHub App installation token
 - Runs static checks (semgrep, flake8)
 - Sends diff + analysis to Ollama (Llama 3)
-- Posts findings as PR review comments (via GitHub App)
+- Posts findings as PR review comments 
 
 ## Setup (summary)
 1. Install and run Ollama (in Docker or locally) and pull `llama3` model.
