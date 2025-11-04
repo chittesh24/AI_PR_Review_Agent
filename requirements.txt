@@ -1,0 +1,6 @@
+PyGithub>=2.3.0
+requests>=2.31.0
+PyJWT>=2.9.0
+cryptography>=40.0.0
+semgrep>=1.68.0
+flake8>=6.0
