@@ -1,5 +1,4 @@
 # 🤖 AI PR Review Agent (GPT-5 Mini)
-
 Automatically reviews Pull Requests using OpenAI GPT-5 Mini and comments on code changes.
 
 ---
