@@ -27,7 +27,7 @@ The file `.github/workflows/ai_pr_review.yml` automatically runs when:
 - A PR is **reopened**
 
 The AI agent:
-1. Reads your code diff  
+1. Reads your code difference  
 2. Sends it securely to GPT-5 Mini  
 3. Posts a summary + inline review comments  
 
@@ -41,4 +41,5 @@ export OPENAI_API_KEY=sk-xxx
 export GITHUB_REPOSITORY=chittesh24/AI_PR_Review_Agent
 export PR_NUMBER=1
 python pr_review_agent.py
+
 
