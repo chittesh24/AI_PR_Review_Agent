@@ -1,4 +1,4 @@
-name: AI PR Review
+name: AI PR Review (OpenRouter + GPT-5 Mini)
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -12,22 +12,29 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.12'
 
-      - name: Install dependencies
+      - name: Install system packages (for semgrep)
         run: |
-          pip install PyGithub openai
+          sudo apt-get update
+          sudo apt-get install -y jq
 
-      - name: Run AI PR Review Agent
+      - name: Install python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run AI PR Review
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
+          OPENROUTER_MODEL: ${{ secrets.OPENROUTER_MODEL }} # optional secret override
         run: python pr_review_agent.py
