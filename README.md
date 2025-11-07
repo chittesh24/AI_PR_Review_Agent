@@ -1,46 +1,23 @@
-# 🤖 AI PR Review Agent (GPT-5 Mini)
-Automatically reviews Pull Requests using OpenAI GPT-5 Mini and comments on code changes.
+# AI PR Review Agent (OpenRouter + GPT-5 Mini default)
 
----
+This repository contains a GitHub Actions-based PR reviewer that:
 
-## 🔧 Setup
+- Fetches a PR diff
+- Runs Semgrep + pip-audit for static & dependency checks
+- Sends a combined prompt to OpenRouter (configurable model)
+- Posts a summary and inline comments back to the PR
 
-1.Clone your repo and copy these files into it.
+## Setup
 
-2. Go to your repo:
-   **Settings → Secrets and variables→Actions**
+1. Add secrets to your repository (Settings → Secrets and variables → Actions):
+   - `OPENROUTER_API_KEY` : your OpenRouter API key (sk-or-...)
+   - (optional) `OPENROUTER_MODEL` : override default model (e.g. openai/gpt-5-mini)
 
-3. Add the following secrets:
+2. The workflow is configured to run on pull_request events. No manual triggers needed.
 
-| Name | Example | Description |
-|------|----------|-------------|
-| `OPENAI_API_KEY` | `sk-xxxxx` | Your GPT-5 Mini API key |
-| `GITHUB_TOKEN` | *(auto-provided)* | Used by GitHub Actions to post comments |
+3. Ensure the repository has `requirements.txt` at root if you want pip-audit to run.
 
----
-
-## ⚙️ Workflow
-
-The file `.github/workflows/ai_pr_review.yml` automatically runs when:
-- A PR is **opened**
-- A PR is **updated**
-- A PR is **reopened**
-
-The AI agent:
-1. Reads your code difference  
-2. Sends it securely to GPT-5 Mini  
-3. Posts a summary + inline review comments  
-
----
-
-## 🧪 Optional Local Run
-
-```bash
-export GITHUB_TOKEN=ghp_xxx
-export OPENAI_API_KEY=sk-xxx
-export GITHUB_REPOSITORY=chittesh24/AI_PR_Review_Agent
-export PR_NUMBER=1
-python pr_review_agent.py
-
-
-
+## Notes & Troubleshooting
+- The agent posts a summary comment and inline review comments (when output parsed as FILE:LINE - Comment).
+- If OpenRouter key hits quota, create a new key or upgrade plan on OpenRouter.
+- Semgrep runs against patch text (best-effort); for more accurate results, consider checking out full repo.
