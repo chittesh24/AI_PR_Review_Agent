@@ -9,32 +9,25 @@ permissions:
   issues: write
 
 jobs:
-  review:
+  ai_review:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
+    steps:
+      - uses: actions/checkout@v3
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: '3.12'
 
-      - name: Install system packages (for semgrep)
+      - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
-
-      - name: Install python dependencies
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install PyGithub requests semgrep pip-audit
 
       - name: Run AI PR Review
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: openai/gpt-5-mini
           GITHUB_REPOSITORY: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          OPENROUTER_MODEL: openai/gpt-5-mini 
         run: python pr_review_agent.py
