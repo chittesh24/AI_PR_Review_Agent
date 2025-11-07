@@ -27,7 +27,10 @@ PR_NUMBER = os.getenv("PR_NUMBER")
 if not all([GITHUB_TOKEN, OPENAI_API_KEY, REPO_NAME, PR_NUMBER]):
     raise EnvironmentError("Missing one or more required environment variables.")
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")
+)
 gh = Github(GITHUB_TOKEN)
 repo = gh.get_repo(REPO_NAME)
 pr = repo.get_pull(int(PR_NUMBER))
@@ -108,3 +111,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
