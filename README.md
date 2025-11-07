@@ -5,7 +5,7 @@ Automatically reviews Pull Requests using OpenAI GPT-5 Mini and comments on code
 
 ## 🔧 Setup
 
-1. Clone your repo and copy these files into it.
+1.Clone your repo and copy these files into it.
 
 2. Go to your repo:
    **Settings → Secrets and variables→Actions**
@@ -41,5 +41,6 @@ export OPENAI_API_KEY=sk-xxx
 export GITHUB_REPOSITORY=chittesh24/AI_PR_Review_Agent
 export PR_NUMBER=1
 python pr_review_agent.py
+
 
 
